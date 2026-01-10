@@ -1,26 +1,119 @@
 @import "tailwindcss";
 
+/* Brand Colors - CSS Variables */
 :root {
+  --color-primary: #fec404;      /* Gold/Yellow - CTAs, buttons */
+  --color-secondary: #102158;    /* Medium Navy - headings */
+  --color-accent: #263b7c;       /* Light Navy - accents */
+  --color-base: #07133d;         /* Dark Navy - backgrounds */
+  --color-action: #E56C70;       /* Coral - secondary actions */
+  --color-white: #ffffff;
+  --color-success: #22c55e;      /* Green for high scores */
+  --color-warning: #f59e0b;      /* Orange for medium scores */
+  --color-danger: #ef4444;       /* Red for low scores */
+
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #07133d;
 }
 
+/* Tailwind v4 theme configuration */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-primary: #fec404;
+  --color-secondary: #102158;
+  --color-accent: #263b7c;
+  --color-base: #07133d;
+  --color-action: #E56C70;
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+/* Custom utility classes */
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-action) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Form input focus states */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(254, 196, 4, 0.3);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-secondary);
+}
+
+/* Animation utilities */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Score level colors */
+.score-high {
+  color: var(--color-success);
+}
+
+.score-medium {
+  color: var(--color-warning);
+}
+
+.score-low {
+  color: var(--color-danger);
+}
+
+.bg-score-high {
+  background-color: var(--color-success);
+}
+
+.bg-score-medium {
+  background-color: var(--color-warning);
+}
+
+.bg-score-low {
+  background-color: var(--color-danger);
 }
