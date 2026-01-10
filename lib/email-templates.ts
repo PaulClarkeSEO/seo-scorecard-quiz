@@ -126,9 +126,9 @@ function getCategoryName(category: string): string {
 function getCategoryFeedback(cat: CategoryScore): string {
   if (cat.level === 'high') {
     switch (cat.category) {
-      case 'gmb': return 'Excellent work! Your Google My Business presence is well-optimized.';
+      case 'gmb': return 'Excellent work! Your Google My Business presence is well-optimised.';
       case 'keywords': return 'Great job! Your local keyword strategy is on point.';
-      case 'website': return 'Fantastic! Your website is well-optimized for search engines.';
+      case 'website': return 'Fantastic! Your website is well-optimised for search engines.';
     }
   } else if (cat.level === 'medium') {
     switch (cat.category) {
@@ -177,7 +177,7 @@ function generatePASContent(score: TotalScore): string {
       <div class="solution">
         <h3 style="color: #155724; margin-top: 0;">Maintain Your Lead</h3>
         <p>However, the digital landscape is always evolving, and there's an ongoing need to adapt and innovate to stay ahead. To ensure you maintain this lead and explore new opportunities for growth, consider a strategy call with our specialists.</p>
-        <p>We can provide advanced insights and strategies to not only sustain your current success but also identify new avenues for further growth and optimization.</p>
+        <p>We can provide advanced insights and strategies to not only sustain your current success but also identify new avenues for further growth and optimisation.</p>
       </div>
     `;
   }
@@ -186,7 +186,7 @@ function generatePASContent(score: TotalScore): string {
   return `
     <div class="problem">
       <h3 style="color: #856404; margin-top: 0;">The Problem</h3>
-      <p>Right now, your competitors who have optimized their online presence are capturing leads that could be yours. Every day without a strong SEO strategy means potential customers are finding your competitors instead of you.</p>
+      <p>Right now, your competitors who have optimised their online presence are capturing leads that could be yours. Every day without a strong SEO strategy means potential customers are finding your competitors instead of you.</p>
       <p>${score.level === 'low' ? 'With a score of ' + score.percentage + '%, your business is likely invisible to most local searchers.' : 'Your current score shows gaps that are costing you visibility and leads.'}</p>
     </div>
 
@@ -221,7 +221,7 @@ The digital landscape is always evolving. To stay ahead, consider a strategy cal
 
   return `
 THE PROBLEM
-Your competitors with optimized online presence are capturing leads that could be yours. ${score.level === 'low' ? 'With a score of ' + score.percentage + '%, your business is likely invisible to most local searchers.' : 'Your current score shows gaps that are costing you visibility.'}
+Your competitors with optimised online presence are capturing leads that could be yours. ${score.level === 'low' ? 'With a score of ' + score.percentage + '%, your business is likely invisible to most local searchers.' : 'Your current score shows gaps that are costing you visibility.'}
 
 WHY THIS MATTERS
 46% of all Google searches have local intent, and 88% of consumers who do a local search visit a related store within a week. If you're not showing up, you're handing customers to competitors.

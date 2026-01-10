@@ -37,9 +37,9 @@ export default function CategoryBreakdown({ categories }: CategoryBreakdownProps
   const getFeedback = (cat: CategoryScore) => {
     if (cat.level === 'high') {
       switch (cat.category) {
-        case 'gmb': return 'Excellent work! Your Google My Business presence is well-optimized.';
+        case 'gmb': return 'Excellent work! Your Google My Business presence is well-optimised.';
         case 'keywords': return 'Great job! Your local keyword strategy is on point.';
-        case 'website': return 'Fantastic! Your website is well-optimized for search engines.';
+        case 'website': return 'Fantastic! Your website is well-optimised for search engines.';
       }
     } else if (cat.level === 'medium') {
       switch (cat.category) {

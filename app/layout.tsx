@@ -10,7 +10,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "SEO Scorecard Quiz | Black And White Boy",
-  description: "Discover how well your business is optimized for local search. Answer 22 quick questions and get a personalised SEO report with actionable insights.",
+  description: "Discover how well your business is optimised for local search. Answer 22 quick questions and get a personalised SEO report with actionable insights.",
   keywords: "SEO, local SEO, Google My Business, website audit, SEO assessment, SEO quiz",
   authors: [{ name: "Black And White Boy" }],
   openGraph: {

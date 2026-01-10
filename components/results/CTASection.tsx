@@ -27,7 +27,7 @@ export default function CTASection({ score }: CTASectionProps) {
         </p>
       )}
 
-      <div className="flex flex-col sm:flex-row gap-4 justify-center">
+      <div className="flex justify-center">
         <a
           href="https://blackandwhiteboy.com/30-mins-meeting/"
           target="_blank"
@@ -35,12 +35,6 @@ export default function CTASection({ score }: CTASectionProps) {
         >
           <Button variant="primary" size="lg">
             Book Your Free Consultation
-          </Button>
-        </a>
-
-        <a href="/" className="inline-block">
-          <Button variant="outline" size="lg">
-            Take Quiz Again
           </Button>
         </a>
       </div>

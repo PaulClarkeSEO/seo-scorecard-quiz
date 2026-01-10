@@ -114,7 +114,7 @@ export default function ResultsPage() {
                     </p>
                   </div>
                   <p className="text-gray-600">
-                    Right now, your competitors who have optimized their online presence are capturing
+                    Right now, your competitors who have optimised their online presence are capturing
                     leads that could be yours. But with the right strategy, you can turn this around.
                   </p>
                 </div>
