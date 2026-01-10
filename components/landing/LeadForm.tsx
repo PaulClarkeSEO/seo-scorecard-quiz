@@ -31,7 +31,7 @@ export default function LeadForm() {
       const response = await fetch('/api/submit-lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({ ...formData, gdprConsent })
       });
 
       const data = await response.json();

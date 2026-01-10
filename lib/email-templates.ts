@@ -5,6 +5,8 @@ interface LeadData {
   lastName: string;
   email: string;
   websiteUrl: string;
+  gdprConsent?: boolean;
+  gdprConsentAt?: string;
 }
 
 export function generateEmailContent(lead: LeadData, score: TotalScore): { subject: string; htmlBody: string; textBody: string } {
@@ -275,6 +277,25 @@ export function generateNotificationEmail(lead: LeadData, score: TotalScore): { 
         </div>
       </div>
 
+      <div class="lead-details" style="background: ${lead.gdprConsent ? '#d4edda' : '#f8d7da'};">
+        <h3>GDPR Consent</h3>
+        <div class="detail-row">
+          <span class="detail-label">Status:</span>
+          <span class="detail-value" style="color: ${lead.gdprConsent ? '#155724' : '#721c24'}; font-weight: bold;">
+            ${lead.gdprConsent ? 'CONSENTED' : 'NOT CONSENTED'}
+          </span>
+        </div>
+        ${lead.gdprConsentAt ? `
+        <div class="detail-row">
+          <span class="detail-label">Timestamp:</span>
+          <span class="detail-value">${new Date(lead.gdprConsentAt).toLocaleString('en-GB', { dateStyle: 'full', timeStyle: 'long' })}</span>
+        </div>
+        ` : ''}
+        <p style="margin: 10px 0 0 0; font-size: 12px; color: #666;">
+          Lead agreed to receive SEO assessment results and marketing emails.
+        </p>
+      </div>
+
       <div class="lead-details">
         <h3>Score Breakdown</h3>
         ${score.categories.map(cat => `
@@ -305,6 +326,11 @@ LEAD DETAILS:
 Name: ${lead.firstName} ${lead.lastName}
 Email: ${lead.email}
 Website: ${lead.websiteUrl}
+
+GDPR CONSENT:
+Status: ${lead.gdprConsent ? 'CONSENTED' : 'NOT CONSENTED'}
+${lead.gdprConsentAt ? `Timestamp: ${new Date(lead.gdprConsentAt).toLocaleString('en-GB', { dateStyle: 'full', timeStyle: 'long' })}` : ''}
+Lead agreed to receive SEO assessment results and marketing emails.
 
 OVERALL SCORE: ${score.percentage}% (${getScoreTitle(score.level)})
 

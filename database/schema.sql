@@ -8,6 +8,8 @@ CREATE TABLE IF NOT EXISTS leads (
   last_name VARCHAR(100) NOT NULL,
   email VARCHAR(255) NOT NULL UNIQUE,
   website_url VARCHAR(500) NOT NULL,
+  gdpr_consent BOOLEAN DEFAULT false,
+  gdpr_consent_at TIMESTAMP WITH TIME ZONE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   completed_at TIMESTAMP WITH TIME ZONE,
   total_score INTEGER,

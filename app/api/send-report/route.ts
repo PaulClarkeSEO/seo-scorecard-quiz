@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     // Get lead details
     const { data: lead, error: leadError } = await supabase
       .from('leads')
-      .select('first_name, last_name, email, website_url')
+      .select('first_name, last_name, email, website_url, gdpr_consent, gdpr_consent_at')
       .eq('id', leadId)
       .single();
 
@@ -79,7 +79,9 @@ export async function POST(request: NextRequest) {
       firstName: lead.first_name,
       lastName: lead.last_name,
       email: lead.email,
-      websiteUrl: lead.website_url
+      websiteUrl: lead.website_url,
+      gdprConsent: lead.gdpr_consent,
+      gdprConsentAt: lead.gdpr_consent_at
     }, totalScore);
 
     await postmarkClient.sendEmail({

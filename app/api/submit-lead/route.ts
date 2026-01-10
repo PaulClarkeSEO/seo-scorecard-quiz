@@ -3,12 +3,20 @@ import { createServerClient } from '@/lib/supabase';
 
 export async function POST(request: NextRequest) {
   try {
-    const { firstName, lastName, email, websiteUrl } = await request.json();
+    const { firstName, lastName, email, websiteUrl, gdprConsent } = await request.json();
 
     // Validate required fields
     if (!firstName || !lastName || !email || !websiteUrl) {
       return NextResponse.json(
         { error: 'All fields are required' },
+        { status: 400 }
+      );
+    }
+
+    // GDPR consent is required
+    if (!gdprConsent) {
+      return NextResponse.json(
+        { error: 'GDPR consent is required' },
         { status: 400 }
       );
     }
@@ -29,7 +37,7 @@ export async function POST(request: NextRequest) {
         .delete()
         .eq('lead_id', existing.id);
 
-      // Reset the lead's completion status
+      // Reset the lead's completion status and update GDPR consent
       await supabase
         .from('leads')
         .update({
@@ -38,7 +46,9 @@ export async function POST(request: NextRequest) {
           score_level: null,
           gmb_score: null,
           keywords_score: null,
-          website_score: null
+          website_score: null,
+          gdpr_consent: gdprConsent,
+          gdpr_consent_at: new Date().toISOString()
         })
         .eq('id', existing.id);
 
@@ -52,7 +62,9 @@ export async function POST(request: NextRequest) {
         first_name: firstName,
         last_name: lastName,
         email,
-        website_url: websiteUrl
+        website_url: websiteUrl,
+        gdpr_consent: gdprConsent,
+        gdpr_consent_at: new Date().toISOString()
       })
       .select('id')
       .single();
