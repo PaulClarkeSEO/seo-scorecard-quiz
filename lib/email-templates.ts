@@ -228,3 +228,91 @@ THE SOLUTION
 These issues are fixable. Book a free 30-minute strategy session where we'll review your weak areas, share quick wins, and outline a roadmap to improve your scores.
   `;
 }
+
+export function generateNotificationEmail(lead: LeadData, score: TotalScore): { subject: string; htmlBody: string; textBody: string } {
+  const subject = `New SEO Scorecard Lead: ${lead.firstName} ${lead.lastName} - ${score.percentage}%`;
+
+  const htmlBody = `
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: 'Poppins', Arial, sans-serif; line-height: 1.6; color: #07133d; }
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+    .header { background: #07133d; color: white; padding: 20px; text-align: center; border-radius: 10px 10px 0 0; }
+    .content { background: #f8f9fa; padding: 30px; border-radius: 0 0 10px 10px; }
+    .lead-details { background: white; padding: 20px; border-radius: 8px; margin: 15px 0; }
+    .lead-details h3 { margin: 0 0 15px 0; color: #07133d; border-bottom: 2px solid #fec404; padding-bottom: 10px; }
+    .detail-row { display: flex; padding: 8px 0; border-bottom: 1px solid #eee; }
+    .detail-label { font-weight: bold; width: 120px; color: #666; }
+    .detail-value { color: #07133d; }
+    .score-badge { background: ${getScoreColor(score.level)}; color: white; font-size: 32px; font-weight: bold; padding: 15px 30px; border-radius: 10px; display: inline-block; margin: 10px 0; }
+    .category { background: white; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid ${getScoreColor(score.level)}; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>New SEO Scorecard Lead</h1>
+      <div class="score-badge">${score.percentage}%</div>
+      <p style="margin: 0;">${getScoreTitle(score.level)}</p>
+    </div>
+
+    <div class="content">
+      <div class="lead-details">
+        <h3>Lead Details</h3>
+        <div class="detail-row">
+          <span class="detail-label">Name:</span>
+          <span class="detail-value">${lead.firstName} ${lead.lastName}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Email:</span>
+          <span class="detail-value"><a href="mailto:${lead.email}">${lead.email}</a></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Website:</span>
+          <span class="detail-value"><a href="${lead.websiteUrl}" target="_blank">${lead.websiteUrl}</a></span>
+        </div>
+      </div>
+
+      <div class="lead-details">
+        <h3>Score Breakdown</h3>
+        ${score.categories.map(cat => `
+          <div class="category">
+            <strong>${getCategoryName(cat.category)}:</strong>
+            <span style="color: ${getScoreColor(cat.level)}; font-weight: bold;">${cat.percentage}%</span>
+            <span style="color: #666;"> (${cat.level.toUpperCase()})</span>
+          </div>
+        `).join('')}
+      </div>
+
+      <p style="text-align: center; margin-top: 20px;">
+        <a href="mailto:${lead.email}?subject=Your%20SEO%20Scorecard%20Results"
+           style="background: #fec404; color: #07133d; padding: 12px 24px; text-decoration: none; font-weight: bold; border-radius: 5px;">
+          Reply to Lead
+        </a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>
+  `;
+
+  const textBody = `
+NEW SEO SCORECARD LEAD
+
+LEAD DETAILS:
+Name: ${lead.firstName} ${lead.lastName}
+Email: ${lead.email}
+Website: ${lead.websiteUrl}
+
+OVERALL SCORE: ${score.percentage}% (${getScoreTitle(score.level)})
+
+CATEGORY BREAKDOWN:
+${score.categories.map(cat => `- ${getCategoryName(cat.category)}: ${cat.percentage}% (${cat.level.toUpperCase()})`).join('\n')}
+
+Reply to this lead at: ${lead.email}
+  `;
+
+  return { subject, htmlBody, textBody };
+}

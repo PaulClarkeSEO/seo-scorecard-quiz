@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@/lib/supabase';
 import { calculateCategoryScores, calculateTotalScore } from '@/lib/scoring';
-import { generateEmailContent } from '@/lib/email-templates';
+import { generateEmailContent, generateNotificationEmail } from '@/lib/email-templates';
 import { getPostmarkClient, POSTMARK_FROM_EMAIL } from '@/lib/postmark';
+
+const NOTIFICATION_EMAIL = 'hello@blackandwhiteboy.com';
 import { Category } from '@/types';
 
 export async function POST(request: NextRequest) {
@@ -61,12 +63,31 @@ export async function POST(request: NextRequest) {
     }, totalScore);
 
     const postmarkClient = getPostmarkClient();
+
+    // Send report to the lead
     await postmarkClient.sendEmail({
       From: POSTMARK_FROM_EMAIL,
       To: lead.email,
       Subject: emailContent.subject,
       HtmlBody: emailContent.htmlBody,
       TextBody: emailContent.textBody,
+      MessageStream: 'outbound'
+    });
+
+    // Send notification to the business
+    const notificationContent = generateNotificationEmail({
+      firstName: lead.first_name,
+      lastName: lead.last_name,
+      email: lead.email,
+      websiteUrl: lead.website_url
+    }, totalScore);
+
+    await postmarkClient.sendEmail({
+      From: POSTMARK_FROM_EMAIL,
+      To: NOTIFICATION_EMAIL,
+      Subject: notificationContent.subject,
+      HtmlBody: notificationContent.htmlBody,
+      TextBody: notificationContent.textBody,
       MessageStream: 'outbound'
     });
 
