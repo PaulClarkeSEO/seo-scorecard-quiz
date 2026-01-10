@@ -3,6 +3,16 @@ import { createServerClient } from '@/lib/supabase';
 
 export async function POST(request: NextRequest) {
   try {
+    // Check environment variables
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+      console.error('Missing NEXT_PUBLIC_SUPABASE_URL');
+      return NextResponse.json({ error: 'Server configuration error: Missing Supabase URL' }, { status: 500 });
+    }
+    if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      console.error('Missing SUPABASE_SERVICE_ROLE_KEY');
+      return NextResponse.json({ error: 'Server configuration error: Missing Supabase key' }, { status: 500 });
+    }
+
     const { firstName, lastName, email, websiteUrl, gdprConsent } = await request.json();
 
     // Validate required fields
@@ -70,8 +80,11 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (error) {
-      console.error('Supabase error:', error);
-      throw new Error('Failed to create lead');
+      console.error('Supabase insert error:', error.message, error.details, error.hint);
+      return NextResponse.json(
+        { error: `Database error: ${error.message}` },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json({ leadId: data.id, existing: false });
