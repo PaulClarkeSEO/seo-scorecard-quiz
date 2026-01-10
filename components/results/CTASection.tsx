@@ -29,7 +29,7 @@ export default function CTASection({ score }: CTASectionProps) {
 
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         <a
-          href="https://blackandwhiteboy.com/contact"
+          href="https://blackandwhiteboy.com/30-mins-meeting/"
           target="_blank"
           rel="noopener noreferrer"
         >

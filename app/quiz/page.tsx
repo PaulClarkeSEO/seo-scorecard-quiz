@@ -98,7 +98,7 @@ export default function QuizPage() {
 
   if (!leadId) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-base flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent"></div>
       </div>
     );
@@ -106,24 +106,24 @@ export default function QuizPage() {
 
   if (isCalculating) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-base flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-4 border-primary border-t-transparent mx-auto mb-4"></div>
-          <h2 className="text-2xl font-semibold text-base mb-2">Calculating Your Results</h2>
-          <p className="text-gray-600">Please wait while we analyze your responses...</p>
+          <h2 className="text-2xl font-semibold text-white mb-2">Calculating Your Results</h2>
+          <p className="text-gray-300">Please wait while we analyze your responses...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 py-12">
+    <main className="min-h-screen bg-base py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-base mb-2">SEO Scorecard Quiz</h1>
-            <p className="text-gray-600">Answer honestly for the most accurate results</p>
+            <h1 className="text-2xl font-bold text-white mb-2">SEO Scorecard Quiz</h1>
+            <p className="text-gray-300">Answer honestly for the most accurate results</p>
           </div>
 
           {/* Progress Bar */}
@@ -145,7 +145,7 @@ export default function QuizPage() {
 
           {/* Category indicator */}
           <div className="mt-8 text-center">
-            <span className="inline-block px-4 py-2 bg-white rounded-full text-sm text-gray-500 shadow-sm">
+            <span className="inline-block px-4 py-2 bg-white/10 rounded-full text-sm text-gray-300 border border-white/20">
               Category: {getCategoryLabel(currentQuestion.category)}
             </span>
           </div>

@@ -14,6 +14,7 @@ export default function LeadForm() {
     email: '',
     websiteUrl: ''
   });
+  const [gdprConsent, setGdprConsent] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -126,20 +127,31 @@ export default function LeadForm() {
         </div>
       )}
 
+      <div className="flex items-start gap-3">
+        <input
+          type="checkbox"
+          id="gdprConsent"
+          checked={gdprConsent}
+          onChange={(e) => setGdprConsent(e.target.checked)}
+          className="mt-1 w-5 h-5 rounded border-white/20 bg-white/10 text-primary focus:ring-primary focus:ring-offset-0 cursor-pointer"
+          required
+        />
+        <label htmlFor="gdprConsent" className="text-sm text-gray-300 text-left cursor-pointer">
+          I agree to receive my SEO assessment results and occasional marketing emails.
+          You can unsubscribe at any time.
+        </label>
+      </div>
+
       <Button
         type="submit"
         variant="primary"
         size="lg"
         className="w-full"
         isLoading={isLoading}
+        disabled={!gdprConsent}
       >
         Start Your Free Assessment
       </Button>
-
-      <p className="text-xs text-gray-400 text-center">
-        By submitting this form, you agree to receive your SEO assessment results
-        and occasional marketing emails. You can unsubscribe at any time.
-      </p>
     </form>
   );
 }

@@ -35,7 +35,7 @@ export default function QuestionCard({
       {showBack && (
         <button
           onClick={onBack}
-          className="flex items-center text-gray-600 hover:text-primary mb-6 transition-colors"
+          className="flex items-center text-gray-300 hover:text-primary mb-6 transition-colors"
           disabled={isSubmitting}
         >
           <svg
@@ -55,14 +55,14 @@ export default function QuestionCard({
         </button>
       )}
 
-      <div className="bg-white rounded-xl shadow-lg p-8">
+      <div className="bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 p-8">
         <div className="mb-6">
           <span className="text-sm font-semibold text-primary">
             Question {questionNumber}
           </span>
         </div>
 
-        <h2 className="text-xl md:text-2xl font-semibold text-base mb-8 leading-relaxed">
+        <h2 className="text-xl md:text-2xl font-semibold text-white mb-8 leading-relaxed">
           {question}
         </h2>
 

@@ -62,7 +62,7 @@ export function generateEmailContent(lead: LeadData, score: TotalScore): { subje
     <div class="cta-section">
       <h2>Ready to Dominate Local Search?</h2>
       <p>Book a free 30-minute strategy session with our SEO experts and discover how to improve your rankings.</p>
-      <a href="https://blackandwhiteboy.com/contact" class="cta-button">Book Your Free Consultation</a>
+      <a href="https://blackandwhiteboy.com/30-mins-meeting/" class="cta-button">Book Your Free Consultation</a>
     </div>
   </div>
 </body>
@@ -85,7 +85,7 @@ ${getTextPASContent(score)}
 
 READY TO DOMINATE LOCAL SEARCH?
 Book a free 30-minute strategy session with our SEO experts.
-Visit: https://blackandwhiteboy.com/contact
+Visit: https://blackandwhiteboy.com/30-mins-meeting/
 
 Best regards,
 Black And White Boy SEO Team
