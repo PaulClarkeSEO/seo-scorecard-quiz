@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@/lib/supabase';
 import { calculateCategoryScores, calculateTotalScore } from '@/lib/scoring';
-import { generateEmailContent } from '@/lib/email-templates';
+import { generateEmailContent, generateNotificationEmail } from '@/lib/email-templates';
 import { getPostmarkClient, POSTMARK_FROM_EMAIL } from '@/lib/postmark';
 import { Category } from '@/types';
+
+const NOTIFICATION_EMAIL = 'hello@blackandwhiteboy.com';
 
 export async function POST(request: NextRequest) {
   try {
@@ -60,10 +62,10 @@ export async function POST(request: NextRequest) {
       throw new Error('Failed to update lead scores');
     }
 
-    // Get lead details for email
+    // Get lead details for email (including GDPR data)
     const { data: lead, error: leadError } = await supabase
       .from('leads')
-      .select('first_name, last_name, email, website_url')
+      .select('first_name, last_name, email, website_url, gdpr_consent, gdpr_consent_at')
       .eq('id', leadId)
       .single();
 
@@ -72,8 +74,11 @@ export async function POST(request: NextRequest) {
       throw new Error('Failed to fetch lead details');
     }
 
-    // Generate and send email
+    // Generate and send emails
     try {
+      const postmarkClient = getPostmarkClient();
+
+      // Send report to the user
       const emailContent = generateEmailContent({
         firstName: lead.first_name,
         lastName: lead.last_name,
@@ -81,7 +86,7 @@ export async function POST(request: NextRequest) {
         websiteUrl: lead.website_url
       }, totalScore);
 
-      const postmarkClient = getPostmarkClient();
+      console.log('Sending user report email to:', lead.email);
       await postmarkClient.sendEmail({
         From: POSTMARK_FROM_EMAIL,
         To: lead.email,
@@ -90,6 +95,28 @@ export async function POST(request: NextRequest) {
         TextBody: emailContent.textBody,
         MessageStream: 'outbound'
       });
+      console.log('User email sent successfully');
+
+      // Send notification to the business
+      const notificationContent = generateNotificationEmail({
+        firstName: lead.first_name,
+        lastName: lead.last_name,
+        email: lead.email,
+        websiteUrl: lead.website_url,
+        gdprConsent: lead.gdpr_consent,
+        gdprConsentAt: lead.gdpr_consent_at
+      }, totalScore);
+
+      console.log('Sending notification email to:', NOTIFICATION_EMAIL);
+      await postmarkClient.sendEmail({
+        From: POSTMARK_FROM_EMAIL,
+        To: NOTIFICATION_EMAIL,
+        Subject: notificationContent.subject,
+        HtmlBody: notificationContent.htmlBody,
+        TextBody: notificationContent.textBody,
+        MessageStream: 'outbound'
+      });
+      console.log('Notification email sent successfully');
     } catch (emailError) {
       console.error('Error sending email:', emailError);
       // Don't fail the request if email fails, just log it
