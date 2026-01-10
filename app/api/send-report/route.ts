@@ -65,7 +65,8 @@ export async function POST(request: NextRequest) {
     const postmarkClient = getPostmarkClient();
 
     // Send report to the lead
-    await postmarkClient.sendEmail({
+    console.log('Sending report email to:', lead.email);
+    const userEmailResult = await postmarkClient.sendEmail({
       From: POSTMARK_FROM_EMAIL,
       To: lead.email,
       Subject: emailContent.subject,
@@ -73,8 +74,10 @@ export async function POST(request: NextRequest) {
       TextBody: emailContent.textBody,
       MessageStream: 'outbound'
     });
+    console.log('User email sent, MessageID:', userEmailResult.MessageID);
 
     // Send notification to the business
+    console.log('Preparing notification email to:', NOTIFICATION_EMAIL);
     const notificationContent = generateNotificationEmail({
       firstName: lead.first_name,
       lastName: lead.last_name,
@@ -84,7 +87,8 @@ export async function POST(request: NextRequest) {
       gdprConsentAt: lead.gdpr_consent_at
     }, totalScore);
 
-    await postmarkClient.sendEmail({
+    console.log('Sending notification email...');
+    const notificationResult = await postmarkClient.sendEmail({
       From: POSTMARK_FROM_EMAIL,
       To: NOTIFICATION_EMAIL,
       Subject: notificationContent.subject,
@@ -92,10 +96,13 @@ export async function POST(request: NextRequest) {
       TextBody: notificationContent.textBody,
       MessageStream: 'outbound'
     });
+    console.log('Notification email sent, MessageID:', notificationResult.MessageID);
 
     return NextResponse.json({
       success: true,
-      message: 'Report sent successfully'
+      message: 'Report sent successfully',
+      userEmailId: userEmailResult.MessageID,
+      notificationEmailId: notificationResult.MessageID
     });
   } catch (error) {
     console.error('Error sending report:', error);
