@@ -45,14 +45,17 @@ export async function POST(request: NextRequest) {
     const totalScore = calculateTotalScore(categoryScores);
 
     // Update lead with scores
+    // Note: Database columns still use old names for backwards compatibility
+    // gbp -> gmb_score, visibility -> keywords_score, website -> website_score
+    // TODO: Add ai_score column and rename others in future migration
     const { error: updateError } = await supabase
       .from('leads')
       .update({
         completed_at: new Date().toISOString(),
         total_score: totalScore.percentage,
         score_level: totalScore.level,
-        gmb_score: categoryScores.find(c => c.category === 'gmb')?.percentage,
-        keywords_score: categoryScores.find(c => c.category === 'keywords')?.percentage,
+        gmb_score: categoryScores.find(c => c.category === 'gbp')?.percentage,
+        keywords_score: categoryScores.find(c => c.category === 'visibility')?.percentage,
         website_score: categoryScores.find(c => c.category === 'website')?.percentage
       })
       .eq('id', leadId);

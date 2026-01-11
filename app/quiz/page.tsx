@@ -5,13 +5,12 @@ import { useRouter } from 'next/navigation';
 import ProgressBar from '@/components/ui/ProgressBar';
 import QuestionCard from '@/components/ui/QuestionCard';
 import { sortedQuestions } from '@/lib/questions';
-import { AnswerOption } from '@/types';
 
 export default function QuizPage() {
   const router = useRouter();
   const [leadId, setLeadId] = useState<string | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [answers, setAnswers] = useState<Record<number, AnswerOption>>({});
+  const [answers, setAnswers] = useState<Record<number, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCalculating, setIsCalculating] = useState(false);
 
@@ -30,16 +29,18 @@ export default function QuizPage() {
   const totalQuestions = sortedQuestions.length;
   const isLastQuestion = currentIndex === totalQuestions - 1;
 
-  const handleAnswer = async (answer: AnswerOption) => {
+  const handleAnswer = async (answerValue: string) => {
     if (!leadId || isSubmitting) return;
 
     setIsSubmitting(true);
 
     const question = sortedQuestions[currentIndex];
-    const points = question.points[answer] ?? 0;
+    // Find the points for the selected answer
+    const selectedOption = question.options.find(o => o.value === answerValue);
+    const points = selectedOption?.points ?? 0;
 
     // Save answer to state
-    setAnswers(prev => ({ ...prev, [question.id]: answer }));
+    setAnswers(prev => ({ ...prev, [question.id]: answerValue }));
 
     try {
       // Submit answer to API
@@ -49,7 +50,7 @@ export default function QuizPage() {
         body: JSON.stringify({
           leadId,
           questionId: question.id,
-          answer,
+          answer: answerValue,
           points,
           category: question.category
         })
@@ -110,7 +111,7 @@ export default function QuizPage() {
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-4 border-primary border-t-transparent mx-auto mb-4"></div>
           <h2 className="text-2xl font-semibold text-white mb-2">Calculating Your Results</h2>
-          <p className="text-gray-300">Please wait while we analyze your responses...</p>
+          <p className="text-gray-300">Please wait while we analyse your responses...</p>
         </div>
       </div>
     );
@@ -157,9 +158,10 @@ export default function QuizPage() {
 
 function getCategoryLabel(category: string): string {
   switch (category) {
-    case 'gmb': return 'Google My Business';
-    case 'keywords': return 'Local Keywords';
-    case 'website': return 'Website Audit';
+    case 'gbp': return 'Google Business Profile';
+    case 'visibility': return 'Local Visibility';
+    case 'website': return 'Website Fundamentals';
+    case 'ai': return 'AI & Future-Readiness';
     default: return category;
   }
 }

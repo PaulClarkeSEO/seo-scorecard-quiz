@@ -116,9 +116,10 @@ function getScoreColor(level: ScoreLevel): string {
 
 function getCategoryName(category: string): string {
   switch (category) {
-    case 'gmb': return 'Google My Business';
-    case 'keywords': return 'Local Keywords';
-    case 'website': return 'Website Audit';
+    case 'gbp': return 'Google Business Profile';
+    case 'visibility': return 'Local Visibility';
+    case 'website': return 'Website Fundamentals';
+    case 'ai': return 'AI & Future-Readiness';
     default: return category;
   }
 }
@@ -126,21 +127,24 @@ function getCategoryName(category: string): string {
 function getCategoryFeedback(cat: CategoryScore): string {
   if (cat.level === 'high') {
     switch (cat.category) {
-      case 'gmb': return 'Excellent work! Your Google My Business presence is well-optimised.';
-      case 'keywords': return 'Great job! Your local keyword strategy is on point.';
-      case 'website': return 'Fantastic! Your website is well-optimised for search engines.';
+      case 'gbp': return 'Excellent work! Your Google Business Profile is well-optimised.';
+      case 'visibility': return 'Great job! Your local visibility strategy is on point.';
+      case 'website': return 'Fantastic! Your website fundamentals are solid.';
+      case 'ai': return 'Impressive! You\'re ahead of the curve with AI readiness.';
     }
   } else if (cat.level === 'medium') {
     switch (cat.category) {
-      case 'gmb': return 'Good progress, but there are opportunities to strengthen your GMB presence.';
-      case 'keywords': return 'You have a foundation, but your local keyword strategy needs work.';
+      case 'gbp': return 'Good progress, but there are opportunities to strengthen your profile.';
+      case 'visibility': return 'You have a foundation, but your local visibility needs work.';
       case 'website': return 'Your website has potential, but several areas need attention.';
+      case 'ai': return 'You\'re getting started with AI, but there\'s room to grow.';
     }
   } else {
     switch (cat.category) {
-      case 'gmb': return 'Your Google My Business needs significant attention to compete locally.';
-      case 'keywords': return 'Your local keyword presence is minimal - this is a priority area.';
-      case 'website': return 'Your website requires substantial improvements for better SEO performance.';
+      case 'gbp': return 'Your Google Business Profile needs significant attention to compete locally.';
+      case 'visibility': return 'Your local visibility is minimal - this is a priority area.';
+      case 'website': return 'Your website requires substantial improvements for better performance.';
+      case 'ai': return 'AI is reshaping search - it\'s time to start preparing.';
     }
   }
   return '';

@@ -1,16 +1,16 @@
 'use client';
 
-import { AnswerOption } from '@/types';
+import { QuestionOption } from '@/types';
 import Button from './Button';
 
 interface QuestionCardProps {
   questionNumber: number;
   question: string;
-  options: AnswerOption[];
-  onAnswer: (answer: AnswerOption) => void;
+  options: QuestionOption[];
+  onAnswer: (answer: string) => void;
   onBack?: () => void;
   showBack: boolean;
-  selectedAnswer?: AnswerOption;
+  selectedAnswer?: string;
   isSubmitting?: boolean;
 }
 
@@ -24,12 +24,6 @@ export default function QuestionCard({
   selectedAnswer,
   isSubmitting
 }: QuestionCardProps) {
-  const optionLabels: Record<AnswerOption, string> = {
-    yes: 'Yes',
-    no: 'No',
-    maybe: 'Not Sure'
-  };
-
   return (
     <div className="max-w-2xl mx-auto">
       {showBack && (
@@ -69,14 +63,14 @@ export default function QuestionCard({
         <div className="flex flex-wrap gap-4">
           {options.map((option) => (
             <Button
-              key={option}
-              onClick={() => onAnswer(option)}
-              variant={selectedAnswer === option ? 'secondary' : 'primary'}
+              key={option.value}
+              onClick={() => onAnswer(option.value)}
+              variant={selectedAnswer === option.value ? 'secondary' : 'primary'}
               size="lg"
-              className="min-w-[140px] capitalize"
+              className="min-w-[140px]"
               disabled={isSubmitting}
             >
-              {optionLabels[option]}
+              {option.label}
             </Button>
           ))}
         </div>

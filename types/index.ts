@@ -1,19 +1,19 @@
 // TypeScript types for SEO Scorecard Quiz
 
-export type Category = 'gmb' | 'keywords' | 'website';
-export type AnswerOption = 'yes' | 'no' | 'maybe';
+export type Category = 'gbp' | 'visibility' | 'website' | 'ai';
 export type ScoreLevel = 'low' | 'medium' | 'high';
+
+export interface QuestionOption {
+  label: string;
+  value: string;
+  points: number;
+}
 
 export interface Question {
   id: number;
   text: string;
   category: Category;
-  options: AnswerOption[];
-  points: {
-    yes: number;
-    no: number;
-    maybe?: number;
-  };
+  options: QuestionOption[];
 }
 
 export interface Lead {
@@ -26,16 +26,17 @@ export interface Lead {
   completed_at?: string;
   total_score?: number;
   score_level?: ScoreLevel;
-  gmb_score?: number;
-  keywords_score?: number;
+  gbp_score?: number;
+  visibility_score?: number;
   website_score?: number;
+  ai_score?: number;
 }
 
 export interface Response {
   id: string;
   lead_id: string;
   question_id: number;
-  answer: AnswerOption;
+  answer: string;
   points: number;
   category: Category;
   created_at: string;
@@ -67,6 +68,6 @@ export interface LeadFormData {
 export interface QuizState {
   leadId: string | null;
   currentQuestionIndex: number;
-  answers: Record<number, AnswerOption>;
+  answers: Record<number, string>;
   isComplete: boolean;
 }

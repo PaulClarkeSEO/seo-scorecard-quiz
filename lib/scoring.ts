@@ -1,10 +1,14 @@
 import { Category, CategoryScore, TotalScore, ScoreLevel } from '@/types';
+import { getCategoryMaxScore } from './questions';
 
 export function calculateCategoryScores(responses: { category: Category; points: number }[]): CategoryScore[] {
+  const categories: Category[] = ['gbp', 'visibility', 'website', 'ai'];
+
   const categoryTotals: Record<Category, { score: number; maxScore: number }> = {
-    gmb: { score: 0, maxScore: 60 },      // 6 questions × 10 points
-    keywords: { score: 0, maxScore: 50 }, // 5 questions × 10 points
-    website: { score: 0, maxScore: 110 }  // 11 questions × 10 points
+    gbp: { score: 0, maxScore: getCategoryMaxScore('gbp') },           // 6 questions
+    visibility: { score: 0, maxScore: getCategoryMaxScore('visibility') }, // 5 questions
+    website: { score: 0, maxScore: getCategoryMaxScore('website') },   // 6 questions
+    ai: { score: 0, maxScore: getCategoryMaxScore('ai') }              // 5 questions
   };
 
   responses.forEach(r => {
@@ -13,10 +17,11 @@ export function calculateCategoryScores(responses: { category: Category; points:
     }
   });
 
-  return Object.entries(categoryTotals).map(([category, { score, maxScore }]) => {
+  return categories.map(category => {
+    const { score, maxScore } = categoryTotals[category];
     const percentage = Math.round((score / maxScore) * 100);
     return {
-      category: category as Category,
+      category,
       score,
       maxScore,
       percentage,
@@ -56,9 +61,10 @@ export function getScoreColor(level: ScoreLevel): string {
 
 export function getCategoryName(category: Category): string {
   switch (category) {
-    case 'gmb': return 'Google My Business';
-    case 'keywords': return 'Local Keywords';
-    case 'website': return 'Website Audit';
+    case 'gbp': return 'Google Business Profile';
+    case 'visibility': return 'Local Visibility';
+    case 'website': return 'Website Fundamentals';
+    case 'ai': return 'AI & Future-Readiness';
     default: return category;
   }
 }
