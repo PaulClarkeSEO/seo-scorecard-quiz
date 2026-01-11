@@ -311,7 +311,7 @@ export default function LandingPage() {
               Why Trust Black And White Boy?
             </h2>
             <p className="text-xl text-gray-300 mb-12">
-              We&apos;ve helped businesses across the UK improve their local search visibility and generate more leads.
+              We&apos;ve helped businesses improve their local search visibility and generate more leads.
             </p>
 
             <div className="grid md:grid-cols-3 gap-8 mb-12">
@@ -324,8 +324,8 @@ export default function LandingPage() {
                 <p className="text-gray-300">of Businesses Helped</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-                <div className="text-4xl font-bold text-primary mb-2">UK</div>
-                <p className="text-gray-300">Based & Focused</p>
+                <div className="text-4xl font-bold text-primary mb-2">ROI</div>
+                <p className="text-gray-300">Focused Results</p>
               </div>
             </div>
 
