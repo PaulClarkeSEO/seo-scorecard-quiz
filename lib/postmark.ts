@@ -9,4 +9,4 @@ export function getPostmarkClient(): postmark.ServerClient {
   return client;
 }
 
-export const POSTMARK_FROM_EMAIL = process.env.POSTMARK_FROM_EMAIL || 'noreply@blackandwhiteboy.com';
+export const POSTMARK_FROM_EMAIL = process.env.POSTMARK_FROM_EMAIL || 'hello@blackandwhiteboy.com';

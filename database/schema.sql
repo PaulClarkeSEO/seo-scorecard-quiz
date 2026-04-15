@@ -16,7 +16,9 @@ CREATE TABLE IF NOT EXISTS leads (
   score_level VARCHAR(20),
   gmb_score INTEGER,
   keywords_score INTEGER,
-  website_score INTEGER
+  website_score INTEGER,
+  email_2_sent_at TIMESTAMP WITH TIME ZONE,
+  email_3_sent_at TIMESTAMP WITH TIME ZONE
 );
 
 -- Create responses table
