@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import ProgressBar from '@/components/ui/ProgressBar';
 import QuestionCard from '@/components/ui/QuestionCard';
 import { sortedQuestions } from '@/lib/questions';
+import { getCategoryName } from '@/lib/scoring';
 
 export default function QuizPage() {
   const router = useRouter();
@@ -77,15 +78,18 @@ export default function QuizPage() {
 
         // Store score data and redirect to results
         sessionStorage.setItem('scoreData', JSON.stringify(scoreData.score));
+        // Keep the calculating screen (and the submit lock) up until the results page
+        // loads, so the last question can't be answered a second time and re-scored.
         router.push(`/results/${leadId}`);
-      } else {
-        // Move to next question
-        setCurrentIndex(prev => prev + 1);
+        return;
       }
+
+      // Move to next question
+      setCurrentIndex(prev => prev + 1);
+      setIsSubmitting(false);
     } catch (error) {
       console.error('Error submitting answer:', error);
       alert('Something went wrong. Please try again.');
-    } finally {
       setIsSubmitting(false);
       setIsCalculating(false);
     }
@@ -147,21 +151,11 @@ export default function QuizPage() {
           {/* Category indicator */}
           <div className="mt-8 text-center">
             <span className="inline-block px-4 py-2 bg-white/10 rounded-full text-sm text-gray-300 border border-white/20">
-              Category: {getCategoryLabel(currentQuestion.category)}
+              Category: {currentQuestion.categoryLabel ?? getCategoryName(currentQuestion.category)}
             </span>
           </div>
         </div>
       </div>
     </main>
   );
-}
-
-function getCategoryLabel(category: string): string {
-  switch (category) {
-    case 'gbp': return 'Google Business Profile';
-    case 'visibility': return 'Local Visibility';
-    case 'website': return 'Website Fundamentals';
-    case 'ai': return 'AI & Future-Readiness';
-    default: return category;
-  }
 }
