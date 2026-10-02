@@ -1,7 +1,7 @@
 'use client';
 
 import { CategoryScore } from '@/types';
-import { getCategoryName, getScoreColor } from '@/lib/scoring';
+import { getCategoryName, getCategoryFeedback, getScoreColor } from '@/lib/scoring';
 
 interface CategoryBreakdownProps {
   categories: CategoryScore[];
@@ -40,31 +40,6 @@ export default function CategoryBreakdown({ categories }: CategoryBreakdownProps
     }
   };
 
-  const getFeedback = (cat: CategoryScore) => {
-    if (cat.level === 'high') {
-      switch (cat.category) {
-        case 'gbp': return 'Excellent work! Your Google Business Profile is well-optimised.';
-        case 'visibility': return 'Great job! Your local visibility strategy is on point.';
-        case 'website': return 'Fantastic! Your website fundamentals are solid.';
-        case 'ai': return 'Impressive! You\'re ahead of the curve with AI readiness.';
-      }
-    } else if (cat.level === 'medium') {
-      switch (cat.category) {
-        case 'gbp': return 'Good progress, but there are opportunities to strengthen your profile.';
-        case 'visibility': return 'You have a foundation, but your local visibility needs work.';
-        case 'website': return 'Your website has potential, but several areas need attention.';
-        case 'ai': return 'You\'re getting started with AI, but there\'s room to grow.';
-      }
-    } else {
-      switch (cat.category) {
-        case 'gbp': return 'Your Google Business Profile needs significant attention to compete locally.';
-        case 'visibility': return 'Your local visibility is minimal - this is a priority area.';
-        case 'website': return 'Your website requires substantial improvements for better performance.';
-        case 'ai': return 'AI is reshaping search - it\'s time to start preparing.';
-      }
-    }
-    return '';
-  };
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-8">
@@ -120,7 +95,7 @@ export default function CategoryBreakdown({ categories }: CategoryBreakdownProps
               </div>
 
               <p className="text-gray-600 text-sm">
-                {getFeedback(cat)}
+                {getCategoryFeedback(cat)}
               </p>
 
               <p className="text-xs text-gray-400 mt-2">

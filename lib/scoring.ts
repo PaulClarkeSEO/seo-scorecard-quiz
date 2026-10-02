@@ -61,12 +61,38 @@ export function getScoreColor(level: ScoreLevel): string {
 
 export function getCategoryName(category: Category): string {
   switch (category) {
-    case 'gbp': return 'Google Business Profile';
-    case 'visibility': return 'Local Visibility';
-    case 'website': return 'Website Fundamentals';
-    case 'ai': return 'AI & Future-Readiness';
+    case 'gbp': return 'Found By Buyers';
+    case 'visibility': return 'AI Search Visibility';
+    case 'website': return 'Website That Wins Enquiries';
+    case 'ai': return 'Pipeline & ROI';
     default: return category;
   }
+}
+
+export function getCategoryFeedback(cat: CategoryScore): string {
+  const feedback: Record<Category, Record<ScoreLevel, string>> = {
+    gbp: {
+      high: 'Buyers who search for what you do are finding you, and your pages give them reasons to trust you.',
+      medium: 'Some buyers find you, but gaps in your service pages or proof mean others shortlist a competitor first.',
+      low: 'Buyers searching for what you do are mostly finding your competitors. This is the first gap to close.'
+    },
+    visibility: {
+      high: 'AI tools know who you are and describe you well. Few businesses your size are here yet.',
+      medium: 'AI tools know some of your story, but not enough to recommend you with confidence.',
+      low: 'AI tools are shortlisting suppliers for your buyers, and you are not on the list yet.'
+    },
+    website: {
+      high: 'Your site is built to turn visits into enquiries, and you can see whether it works.',
+      medium: 'Your site does a job, but you are likely losing enquiries you never see.',
+      low: 'Your site is costing you enquiries. Visitors arrive, cannot find what they need, and leave.'
+    },
+    ai: {
+      high: 'You know where your work comes from and what your marketing returns. That puts you ahead of most.',
+      medium: 'You have some visibility of your pipeline, but not enough to know what to spend more on.',
+      low: 'Your new business depends on too few sources, and you cannot see what your marketing returns.'
+    }
+  };
+  return feedback[cat.category]?.[cat.level] ?? '';
 }
 
 export function getScoreTitle(level: ScoreLevel): string {

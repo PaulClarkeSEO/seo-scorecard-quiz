@@ -11,19 +11,19 @@ export default function CTASection({ score }: CTASectionProps) {
   return (
     <div className="bg-base rounded-xl p-8 text-center">
       <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-        Ready to Dominate Local Search?
+        Want to know which gap to close first?
       </h2>
 
       {score.level === 'high' ? (
         <p className="text-gray-300 mb-6 max-w-xl mx-auto">
-          Your SEO foundation is strong! Let&apos;s explore advanced strategies
-          to maintain your lead and discover new growth opportunities.
+          You&apos;re ahead of most. On a free 30-minute call we&apos;ll check where
+          you stand in AI search and find your next gain.
         </p>
       ) : (
         <p className="text-gray-300 mb-6 max-w-xl mx-auto">
-          Book a free 30-minute strategy session with our SEO experts.
-          We&apos;ll review your results and share actionable tips to improve
-          your rankings and generate more leads.
+          Book a free 30-minute call with Paul. We&apos;ll go through your scorecard,
+          check where you show up in Google and AI search, and give you 3 to 5
+          fixes you can start on straight away.
         </p>
       )}
 
@@ -41,8 +41,8 @@ export default function CTASection({ score }: CTASectionProps) {
 
       <div className="mt-8 pt-8 border-t border-gray-700">
         <p className="text-gray-400 text-sm">
-          No pressure, no obligation - just actionable insights you can use
-          whether you work with us or not.
+          No pitch, no obligation. If your search is already in good shape,
+          we&apos;ll tell you.
         </p>
       </div>
     </div>

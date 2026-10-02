@@ -1,4 +1,5 @@
-import { TotalScore, CategoryScore, ScoreLevel } from '@/types';
+import { TotalScore, ScoreLevel } from '@/types';
+import { getCategoryName, getCategoryFeedback } from './scoring';
 
 interface LeadData {
   firstName: string;
@@ -7,6 +8,7 @@ interface LeadData {
   websiteUrl: string;
   gdprConsent?: boolean;
   gdprConsentAt?: string;
+  turnover?: string;
 }
 
 export function generateEmailContent(lead: LeadData, score: TotalScore): { subject: string; htmlBody: string; textBody: string } {
@@ -62,8 +64,8 @@ export function generateEmailContent(lead: LeadData, score: TotalScore): { subje
     </div>
 
     <div class="cta-section">
-      <h2>Ready to Dominate Local Search?</h2>
-      <p>Book a free 30-minute strategy session with our SEO experts and discover how to improve your rankings.</p>
+      <h2>Want to know which gap to close first?</h2>
+      <p>Book a free 30-minute call with Paul. We'll go through your scorecard and check where you stand in Google and AI search.</p>
       <a href="https://blackandwhiteboy.com/30-mins-meeting/" class="cta-button">Book Your Free Consultation</a>
     </div>
   </div>
@@ -85,12 +87,12 @@ ${score.categories.map(cat => `- ${getCategoryName(cat.category)}: ${cat.percent
 
 ${getTextPASContent(score)}
 
-READY TO DOMINATE LOCAL SEARCH?
-Book a free 30-minute strategy session with our SEO experts.
+WANT TO KNOW WHICH GAP TO CLOSE FIRST?
+Book a free 30-minute call with Paul. We'll go through your scorecard and check where you stand in Google and AI search.
 Visit: https://blackandwhiteboy.com/30-mins-meeting/
 
-Best regards,
-Black And White Boy SEO Team
+Paul Clarke
+Black And White Boy SEO
   `;
 
   return { subject, htmlBody, textBody };
@@ -114,62 +116,26 @@ function getScoreColor(level: ScoreLevel): string {
   }
 }
 
-function getCategoryName(category: string): string {
-  switch (category) {
-    case 'gbp': return 'Google Business Profile';
-    case 'visibility': return 'Local Visibility';
-    case 'website': return 'Website Fundamentals';
-    case 'ai': return 'AI & Future-Readiness';
-    default: return category;
-  }
-}
-
-function getCategoryFeedback(cat: CategoryScore): string {
-  if (cat.level === 'high') {
-    switch (cat.category) {
-      case 'gbp': return 'Excellent work! Your Google Business Profile is well-optimised.';
-      case 'visibility': return 'Great job! Your local visibility strategy is on point.';
-      case 'website': return 'Fantastic! Your website fundamentals are solid.';
-      case 'ai': return 'Impressive! You\'re ahead of the curve with AI readiness.';
-    }
-  } else if (cat.level === 'medium') {
-    switch (cat.category) {
-      case 'gbp': return 'Good progress, but there are opportunities to strengthen your profile.';
-      case 'visibility': return 'You have a foundation, but your local visibility needs work.';
-      case 'website': return 'Your website has potential, but several areas need attention.';
-      case 'ai': return 'You\'re getting started with AI, but there\'s room to grow.';
-    }
-  } else {
-    switch (cat.category) {
-      case 'gbp': return 'Your Google Business Profile needs significant attention to compete locally.';
-      case 'visibility': return 'Your local visibility is minimal - this is a priority area.';
-      case 'website': return 'Your website requires substantial improvements for better performance.';
-      case 'ai': return 'AI is reshaping search - it\'s time to start preparing.';
-    }
-  }
-  return '';
-}
-
 function generatePositiveReflection(score: TotalScore): string {
   if (score.level === 'high') {
     return `
       <div style="background: #d4edda; padding: 20px; border-radius: 8px; margin: 20px 0;">
-        <h3 style="color: #155724; margin-top: 0;">Congratulations!</h3>
-        <p>Scoring in the <strong>High</strong> range is a commendable achievement! Your business is leveraging many best practices in terms of Google My Business utilisation, local SEO, and website optimisation. Your efforts are likely translating into greater online visibility, more leads, and a strong competitive edge in your local market.</p>
+        <h3 style="color: #155724; margin-top: 0;">You're ahead of most</h3>
+        <p>Buyers can find you, your site gives them reasons to get in touch, and you can see where your work comes from. Most businesses your size can't say that.</p>
       </div>
     `;
   } else if (score.level === 'medium') {
     return `
       <div style="background: #fff3cd; padding: 20px; border-radius: 8px; margin: 20px 0;">
-        <h3 style="color: #856404; margin-top: 0;">Good Foundation</h3>
-        <p>You've made progress with your online presence, but there's significant room for improvement. You're competing, but not yet dominating. With some focused effort on the areas highlighted below, you could see substantial improvements in your search visibility and lead generation.</p>
+        <h3 style="color: #856404; margin-top: 0;">Good foundation, real gaps</h3>
+        <p>You're getting some enquiries from search, but not as many as you could. Buyers who don't find you, or don't find what they need, shortlist someone else. The breakdown below shows where.</p>
       </div>
     `;
   } else {
     return `
       <div style="background: #f8d7da; padding: 20px; border-radius: 8px; margin: 20px 0;">
-        <h3 style="color: #721c24; margin-top: 0;">Time for Action</h3>
-        <p>Your current score indicates that your business has significant untapped potential online. The good news? This means there are plenty of opportunities for quick wins that could dramatically improve your visibility and lead flow.</p>
+        <h3 style="color: #721c24; margin-top: 0;">The gains are in front of you</h3>
+        <p>Right now, most buyers who search for what you do won't find you. That's fixable, and the first fixes are usually the cheapest.</p>
       </div>
     `;
   }
@@ -179,9 +145,9 @@ function generatePASContent(score: TotalScore): string {
   if (score.level === 'high') {
     return `
       <div class="solution">
-        <h3 style="color: #155724; margin-top: 0;">Maintain Your Lead</h3>
-        <p>However, the digital landscape is always evolving, and there's an ongoing need to adapt and innovate to stay ahead. To ensure you maintain this lead and explore new opportunities for growth, consider a strategy call with our specialists.</p>
-        <p>We can provide advanced insights and strategies to not only sustain your current success but also identify new avenues for further growth and optimisation.</p>
+        <h3 style="color: #155724; margin-top: 0;">Staying ahead</h3>
+        <p>Search is changing fast. Buyers now ask ChatGPT and Google's AI for supplier shortlists before they visit a single website. The businesses those tools recommend today will be hard to dislodge.</p>
+        <p>On a 30-minute call we can check where you stand in AI search and find your next gain.</p>
       </div>
     `;
   }
@@ -189,28 +155,25 @@ function generatePASContent(score: TotalScore): string {
   // PAS for Medium/Low scores
   return `
     <div class="problem">
-      <h3 style="color: #856404; margin-top: 0;">The Problem</h3>
-      <p>Right now, your competitors who have optimised their online presence are capturing leads that could be yours. Every day without a strong SEO strategy means potential customers are finding your competitors instead of you.</p>
-      <p>${score.level === 'low' ? 'With a score of ' + score.percentage + '%, your business is likely invisible to most local searchers.' : 'Your current score shows gaps that are costing you visibility and leads.'}</p>
+      <h3 style="color: #856404; margin-top: 0;">The problem</h3>
+      <p>When a buyer searches for what you do, or asks an AI tool for a shortlist, the businesses that show up get the enquiry. ${score.level === 'low' ? 'With a score of ' + score.percentage + '%, that is mostly your competitors.' : 'Your score shows gaps where buyers are going elsewhere.'}</p>
     </div>
 
     <div class="agitate">
-      <h3 style="color: #721c24; margin-top: 0;">Why This Matters</h3>
-      <p>Consider this: <strong>46% of all Google searches have local intent</strong>, and <strong>88% of consumers who do a local search on their smartphone visit a related store within a week</strong>.</p>
-      <p>If your business isn't showing up in local search results, you're essentially handing those customers to your competitors. Every week that passes is another week of lost revenue and missed opportunities.</p>
-      <p>The longer you wait, the more entrenched your competitors become, making it harder and more expensive to catch up.</p>
+      <h3 style="color: #721c24; margin-top: 0;">Why it matters</h3>
+      <p>If too much of your work comes from one customer, sector or referral partner, a single change can hit your turnover hard. Search and AI visibility give you a source of enquiries you control.</p>
+      <p>The longer competitors hold those spots, the harder and more expensive they are to win back.</p>
     </div>
 
     <div class="solution">
-      <h3 style="color: #155724; margin-top: 0;">The Solution</h3>
-      <p>The good news is that these issues are fixable, and we specialize in helping businesses exactly like yours transform their online presence.</p>
-      <p>In a free 30-minute strategy session, we'll:</p>
+      <h3 style="color: #155724; margin-top: 0;">What to do next</h3>
+      <p>In a free 30-minute call, we'll:</p>
       <ul>
-        <li>Review your specific weak areas identified in this assessment</li>
-        <li>Share 3-5 quick wins you can implement immediately</li>
-        <li>Outline a roadmap to improve your scores and start generating more leads</li>
+        <li>Go through the weak areas in your scorecard</li>
+        <li>Check where you show up in Google and AI search today</li>
+        <li>Give you 3 to 5 fixes you can start on straight away</li>
       </ul>
-      <p><strong>No pressure, no obligation</strong> - just actionable insights you can use whether you work with us or not.</p>
+      <p><strong>No pitch, no obligation.</strong> If your search is already in good shape, we'll tell you.</p>
     </div>
   `;
 }
@@ -218,25 +181,25 @@ function generatePASContent(score: TotalScore): string {
 function getTextPASContent(score: TotalScore): string {
   if (score.level === 'high') {
     return `
-MAINTAIN YOUR LEAD
-The digital landscape is always evolving. To stay ahead, consider a strategy call with our specialists to identify new growth opportunities.
+STAYING AHEAD
+Buyers now ask ChatGPT and Google's AI for supplier shortlists. On a 30-minute call we can check where you stand in AI search and find your next gain.
     `;
   }
 
   return `
 THE PROBLEM
-Your competitors with optimised online presence are capturing leads that could be yours. ${score.level === 'low' ? 'With a score of ' + score.percentage + '%, your business is likely invisible to most local searchers.' : 'Your current score shows gaps that are costing you visibility.'}
+When a buyer searches for what you do, the businesses that show up get the enquiry. ${score.level === 'low' ? 'With a score of ' + score.percentage + '%, that is mostly your competitors.' : 'Your score shows gaps where buyers are going elsewhere.'}
 
-WHY THIS MATTERS
-46% of all Google searches have local intent, and 88% of consumers who do a local search visit a related store within a week. If you're not showing up, you're handing customers to competitors.
+WHY IT MATTERS
+If too much of your work comes from one customer, sector or referral partner, a single change can hit your turnover hard. Search and AI visibility give you a source of enquiries you control.
 
-THE SOLUTION
-These issues are fixable. Book a free 30-minute strategy session where we'll review your weak areas, share quick wins, and outline a roadmap to improve your scores.
+WHAT TO DO NEXT
+In a free 30-minute call we'll go through your weak areas, check where you show up in Google and AI search, and give you 3 to 5 fixes to start on. No pitch, no obligation.
   `;
 }
 
 export function generateNotificationEmail(lead: LeadData, score: TotalScore): { subject: string; htmlBody: string; textBody: string } {
-  const subject = `New SEO Scorecard Lead: ${lead.firstName} ${lead.lastName} - ${score.percentage}%`;
+  const subject = `New SEO Scorecard Lead: ${lead.firstName} ${lead.lastName} - ${score.percentage}%${lead.turnover ? ` - ${lead.turnover}` : ''}`;
 
   const htmlBody = `
 <!DOCTYPE html>
@@ -278,6 +241,10 @@ export function generateNotificationEmail(lead: LeadData, score: TotalScore): { 
         <div class="detail-row">
           <span class="detail-label">Website:</span>
           <span class="detail-value"><a href="${lead.websiteUrl}" target="_blank">${lead.websiteUrl}</a></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Turnover:</span>
+          <span class="detail-value">${lead.turnover ?? 'Not given'}</span>
         </div>
       </div>
 
@@ -330,6 +297,7 @@ LEAD DETAILS:
 Name: ${lead.firstName} ${lead.lastName}
 Email: ${lead.email}
 Website: ${lead.websiteUrl}
+Turnover: ${lead.turnover ?? 'Not given'}
 
 GDPR CONSENT:
 Status: ${lead.gdprConsent ? 'CONSENTED' : 'NOT CONSENTED'}

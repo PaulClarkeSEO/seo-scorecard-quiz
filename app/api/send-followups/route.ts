@@ -10,7 +10,7 @@ import { getPostmarkClient } from '@/lib/postmark';
 
 const CAL_LINK = process.env.CAL_LINK || 'https://blackandwhiteboy.com/30-mins-meeting/';
 const NURTURE_FROM = process.env.NURTURE_FROM_EMAIL || 'paul@blackandwhiteboy.com';
-const TOOL_NAME = 'Local SEO Scorecard';
+const TOOL_NAME = 'SEO Scorecard';
 const TOOL_URL = 'https://local-seo-scorecard.blackandwhiteboy.com';
 
 export const dynamic = 'force-dynamic';
@@ -132,9 +132,9 @@ function buildEmail2(lead: Lead) {
   const level = (lead.score_level || '').toLowerCase();
 
   const levelAngle: Record<string, string> = {
-    high: "You came out of the scorecard strong. Which is great, but it's also where most people stop looking. The question worth asking now is which of the three areas — Google Business Profile, keywords, or website — is weakest, because that's where your next jump comes from.",
-    medium: "You're scoring in the middle across the board. The pattern I see most often is that one area is genuinely solid and the other two have gaps that feel smaller than they are. Fixing the right one first makes the biggest difference.",
-    low: "A low score isn't a bad place to be. It means the gains are in front of you, not behind you. But the order matters. Most local businesses try to fix everything at once and end up fixing nothing."
+    high: "You came out of the scorecard strong. Which is great, but it's also where most people stop looking. The question worth asking now is which of the four areas is weakest, because that's where your next jump comes from.",
+    medium: "You're scoring in the middle across the board. The pattern I see most often is that one area is genuinely solid and the others have gaps that feel smaller than they are. Fixing the right one first makes the biggest difference.",
+    low: "A low score isn't a bad place to be. It means the gains are in front of you, not behind you. But the order matters. Most businesses try to fix everything at once and end up fixing nothing."
   };
   const angle = levelAngle[level] || "Thanks for taking the scorecard.";
 
@@ -147,13 +147,14 @@ Quick follow-up on your ${TOOL_NAME} from a few days ago.
 
 ${angle}
 
-The three areas the scorecard tests are:
+The four areas the scorecard tests are:
 
-- Google Business Profile (how you show up in the map pack)
-- Keywords (whether you rank for what your customers actually search)
-- Website (whether your site converts the visits you already get)
+- Found by buyers (whether buyers find you when they search for what you do)
+- AI search (whether ChatGPT and Google's AI recommend you)
+- Website (whether your site turns visits into enquiries)
+- Pipeline and ROI (whether you know where your work comes from)
 
-If you are not sure which one to tackle first, that's normally the sign you need another set of eyes on it. Happy to do that — 30 minutes, free, no pitch:
+If you are not sure which one to tackle first, that's normally the sign you need another set of eyes on it. Happy to do that. 30 minutes, free, no pitch:
 
 ${CAL_LINK}
 
@@ -174,15 +175,16 @@ ${TOOL_URL}
     bodyParagraphs: [
       `Quick follow-up on your <strong>${TOOL_NAME}</strong> from a few days ago.`,
       angle,
-      `The three areas the scorecard tests are:`
+      `The four areas the scorecard tests are:`
     ],
     bullets: [
-      `<strong>Google Business Profile</strong> — how you show up in the map pack`,
-      `<strong>Keywords</strong> — whether you rank for what your customers actually search`,
-      `<strong>Website</strong> — whether your site converts the visits you already get`
+      `<strong>Found by buyers</strong>: whether buyers find you when they search for what you do`,
+      `<strong>AI search</strong>: whether ChatGPT and Google's AI recommend you`,
+      `<strong>Website</strong>: whether your site turns visits into enquiries`,
+      `<strong>Pipeline and ROI</strong>: whether you know where your work comes from`
     ],
     closingParagraphs: [
-      `If you are not sure which one to tackle first, that's normally the sign you need another set of eyes on it. Happy to do that — 30 minutes, free, no pitch.`,
+      `If you are not sure which one to tackle first, that's normally the sign you need another set of eyes on it. Happy to do that. 30 minutes, free, no pitch.`,
       `I'll look at your scorecard before the call so we go straight to what matters.`
     ],
     ctaText: 'Book a 30-min review',
@@ -205,7 +207,7 @@ function buildEmail3(lead: Lead) {
   const text = `
 Hi ${firstName},
 
-Last nudge, promise.
+Last one from me, promise.
 
 You took the ${TOOL_NAME} a week ago. Thought I'd check in once in case the results sparked a question.
 
@@ -215,11 +217,11 @@ Three things I can do in a free 30-minute call:
 2. Tell you honestly whether they're worth fixing yourself or need help
 3. Sketch out what the first 90 days of work would actually look like if you did want help
 
-No pitch. If it turns out your local SEO is already in decent shape, I'll tell you. That's the job.
+No pitch. If it turns out your search is already in decent shape, I'll tell you. That's the job.
 
 ${CAL_LINK}
 
-If it is not the right time, no worries — just hit reply and let me know so I stop emailing.
+If it is not the right time, no worries. Just hit reply and let me know so I stop emailing.
 
 Paul
 
@@ -232,7 +234,7 @@ ${TOOL_URL}
     preheader: "Free 30 minutes to walk through your scorecard together.",
     heading: `Still thinking about it, ${firstName}?`,
     bodyParagraphs: [
-      `Last nudge, promise.`,
+      `Last one from me, promise.`,
       `You took the <strong>${TOOL_NAME}</strong> a week ago. Thought I'd check in once in case the results sparked a question.`,
       `Three things I can do in a free 30-minute call:`
     ],
@@ -242,8 +244,8 @@ ${TOOL_URL}
       `Sketch out what the first 90 days of work would actually look like if you did want help`
     ],
     closingParagraphs: [
-      `No pitch. If it turns out your local SEO is already in decent shape, I'll tell you. That's the job.`,
-      `If it is not the right time, no worries — just hit reply and let me know so I stop emailing.`
+      `No pitch. If it turns out your search is already in decent shape, I'll tell you. That's the job.`,
+      `If it is not the right time, no worries. Just hit reply and let me know so I stop emailing.`
     ],
     ctaText: 'Book the 30 minutes',
     ctaLink: CAL_LINK,

@@ -3,238 +3,193 @@ import { Question, Category } from '@/types';
 export type { Category };
 
 export const questions: Question[] = [
-  // Category 1: Google Business Profile (6 questions)
+  // Qualifier (unscored): every option is 0 points, so category totals are unaffected
+  {
+    id: 0,
+    text: "What is your company's annual turnover?",
+    category: "ai",
+    categoryLabel: "About Your Business",
+    options: [
+      { label: "Under £500k", value: "under-500k", points: 0 },
+      { label: "£500k–£2m", value: "500k-2m", points: 0 },
+      { label: "£2m–£10m", value: "2m-10m", points: 0 },
+      { label: "Over £10m", value: "over-10m", points: 0 }
+    ]
+  },
+
+  // Category 1: Found By Buyers (DB key 'gbp', 4 questions)
   {
     id: 1,
-    text: "Do you have a verified Google Business Profile?",
+    text: "When a buyer searches for what you make or do (not your company name), where do you show up?",
     category: "gbp",
     options: [
-      { label: "Yes", value: "yes", points: 10 },
-      { label: "No", value: "no", points: 0 }
+      { label: "Top 3", value: "top3", points: 10 },
+      { label: "Page 1", value: "page1", points: 6 },
+      { label: "Page 2 or later", value: "page2plus", points: 2 },
+      { label: "Don't know", value: "unknown", points: 0 }
     ]
   },
   {
     id: 2,
-    text: "How complete is your Google Business Profile?",
+    text: "Does each core service, capability or sector you want to win have its own page?",
     category: "gbp",
     options: [
-      { label: "Fully complete with photos, hours, and services", value: "full", points: 10 },
-      { label: "Partially complete", value: "partial", points: 5 },
-      { label: "Just the basics", value: "basic", points: 2 },
-      { label: "Not sure", value: "unsure", points: 0 }
+      { label: "Yes, each one", value: "each", points: 10 },
+      { label: "Some do", value: "some", points: 6 },
+      { label: "One general page", value: "one", points: 2 },
+      { label: "No", value: "no", points: 0 }
     ]
   },
   {
     id: 3,
-    text: "How often do you post updates to your Google Business Profile?",
+    text: "Do your key pages show the proof buyers check: accreditations (e.g. ISO), case studies, named clients?",
     category: "gbp",
     options: [
-      { label: "Weekly", value: "weekly", points: 10 },
-      { label: "Monthly", value: "monthly", points: 6 },
-      { label: "Rarely", value: "rarely", points: 2 },
-      { label: "Never", value: "never", points: 0 }
+      { label: "Yes, on the key pages", value: "key-pages", points: 10 },
+      { label: "Somewhere on the site", value: "somewhere", points: 6 },
+      { label: "No", value: "no", points: 0 }
     ]
   },
   {
     id: 4,
-    text: "Do you actively respond to Google reviews?",
+    text: "In the last 12 months, has your website brought an enquiry from a company you had never heard of?",
     category: "gbp",
     options: [
-      { label: "Within 24 hours", value: "24h", points: 10 },
-      { label: "Within a week", value: "week", points: 6 },
-      { label: "Sometimes", value: "sometimes", points: 3 },
-      { label: "Never", value: "never", points: 0 }
+      { label: "Yes, regularly", value: "regularly", points: 10 },
+      { label: "Once or twice", value: "once-twice", points: 6 },
+      { label: "No", value: "no", points: 0 },
+      { label: "Don't know", value: "unknown", points: 0 }
     ]
   },
+
+  // Category 2: AI Search Visibility (DB key 'visibility', 4 questions)
   {
     id: 5,
-    text: "Have you added products or services to your Google Business Profile?",
-    category: "gbp",
+    text: "Ask ChatGPT \"Who are the best [your service] companies in the UK?\" Are you named?",
+    category: "visibility",
     options: [
-      { label: "Yes, all of them", value: "all", points: 10 },
-      { label: "Some", value: "some", points: 5 },
-      { label: "No", value: "no", points: 0 }
+      { label: "Yes", value: "yes", points: 10 },
+      { label: "Sometimes", value: "sometimes", points: 6 },
+      { label: "No", value: "no", points: 2 },
+      { label: "Never checked", value: "unchecked", points: 0 }
     ]
   },
   {
     id: 6,
-    text: "Do you use Google Business messaging?",
-    category: "gbp",
-    options: [
-      { label: "Yes, actively", value: "active", points: 10 },
-      { label: "Set up but rarely use", value: "rarely", points: 4 },
-      { label: "No", value: "no", points: 0 }
-    ]
-  },
-
-  // Category 2: Local Visibility (5 questions)
-  {
-    id: 7,
-    text: "When someone searches for your service near them, where do you typically appear?",
+    text: "When AI tools describe your business, are they accurate (what you do, sectors, location)?",
     category: "visibility",
     options: [
-      { label: "Top 3 results", value: "top3", points: 10 },
-      { label: "First page", value: "page1", points: 6 },
-      { label: "Second page or later", value: "page2plus", points: 2 },
+      { label: "Yes", value: "yes", points: 10 },
+      { label: "Partly", value: "partly", points: 6 },
+      { label: "No", value: "no", points: 2 },
+      { label: "Never checked", value: "unchecked", points: 0 }
+    ]
+  },
+  {
+    id: 7,
+    text: "Is your business mentioned on other sites: trade bodies, industry press, supplier lists, directories?",
+    category: "visibility",
+    options: [
+      { label: "Lots", value: "lots", points: 10 },
+      { label: "A few", value: "few", points: 6 },
+      { label: "Hardly any", value: "hardly", points: 2 },
       { label: "Don't know", value: "unknown", points: 0 }
     ]
   },
   {
     id: 8,
-    text: "Are you listed on other directories (Yelp, Bing Places, Apple Maps)?",
+    text: "Does your site answer the questions buyers ask before they shortlist: lead times, minimum orders, process, pricing approach?",
     category: "visibility",
     options: [
-      { label: "Yes, all major ones", value: "all", points: 10 },
-      { label: "A few", value: "some", points: 5 },
-      { label: "Just Google", value: "google_only", points: 2 },
-      { label: "None", value: "none", points: 0 }
+      { label: "Yes, clearly", value: "clearly", points: 10 },
+      { label: "Some of them", value: "some", points: 6 },
+      { label: "No", value: "no", points: 0 }
     ]
   },
+
+  // Category 3: Website That Wins Enquiries (DB key 'website', 4 questions)
   {
     id: 9,
-    text: "Is your business name, address, and phone number consistent across all listings?",
-    category: "visibility",
+    text: "Can a visitor find how to contact you on every page in under 5 seconds?",
+    category: "website",
     options: [
       { label: "Yes", value: "yes", points: 10 },
-      { label: "Mostly", value: "mostly", points: 5 },
-      { label: "Not sure", value: "unsure", points: 2 },
-      { label: "No", value: "no", points: 0 }
+      { label: "Only on the contact page", value: "contact-only", points: 2 },
+      { label: "Not sure", value: "unsure", points: 0 }
     ]
   },
   {
     id: 10,
-    text: "Do you have location-specific pages for each area you serve?",
-    category: "visibility",
+    text: "Do you know your website's enquiry rate (enquiries divided by visitors)?",
+    category: "website",
     options: [
       { label: "Yes", value: "yes", points: 10 },
-      { label: "Some", value: "some", points: 5 },
+      { label: "Roughly", value: "roughly", points: 6 },
       { label: "No", value: "no", points: 0 }
     ]
   },
   {
     id: 11,
-    text: "Do you track your local search rankings?",
-    category: "visibility",
+    text: "Does your site load fast on a phone?",
+    category: "website",
     options: [
-      { label: "Yes, regularly", value: "regularly", points: 10 },
-      { label: "Occasionally", value: "occasionally", points: 5 },
-      { label: "No", value: "no", points: 0 }
+      { label: "Yes, we've tested it", value: "tested", points: 10 },
+      { label: "I think so", value: "think-so", points: 6 },
+      { label: "No or not sure", value: "no", points: 0 }
+    ]
+  },
+  {
+    id: 12,
+    text: "When did you last update your main service pages?",
+    category: "website",
+    options: [
+      { label: "In the last 6 months", value: "6m", points: 10 },
+      { label: "6–24 months ago", value: "6-24m", points: 6 },
+      { label: "Over 2 years ago", value: "2y-plus", points: 2 },
+      { label: "Don't know", value: "unknown", points: 0 }
     ]
   },
 
-  // Category 3: Website Fundamentals (6 questions)
-  {
-    id: 12,
-    text: "Does your website load in under 3 seconds on mobile?",
-    category: "website",
-    options: [
-      { label: "Yes", value: "yes", points: 10 },
-      { label: "Not sure", value: "unsure", points: 3 },
-      { label: "No", value: "no", points: 0 }
-    ]
-  },
+  // Category 4: Pipeline & ROI (DB key 'ai', 4 questions)
   {
     id: 13,
-    text: "Does your website have a clear call-to-action on every page?",
-    category: "website",
+    text: "How much of your new business comes from your single biggest source (one customer, sector or referral partner)?",
+    category: "ai",
     options: [
-      { label: "Yes", value: "yes", points: 10 },
-      { label: "Some pages", value: "some", points: 5 },
-      { label: "No", value: "no", points: 0 }
+      { label: "Under 25%", value: "under-25", points: 10 },
+      { label: "25–50%", value: "25-50", points: 6 },
+      { label: "Over 50%", value: "over-50", points: 2 },
+      { label: "Don't know", value: "unknown", points: 0 }
     ]
   },
   {
     id: 14,
-    text: "Do you have customer testimonials or reviews on your website?",
-    category: "website",
+    text: "Do you track which channel each enquiry came from?",
+    category: "ai",
     options: [
-      { label: "Yes, prominently displayed", value: "prominent", points: 10 },
-      { label: "Yes, but hidden away", value: "hidden", points: 4 },
+      { label: "Every enquiry", value: "every", points: 10 },
+      { label: "Some", value: "some", points: 6 },
       { label: "No", value: "no", points: 0 }
     ]
   },
   {
     id: 15,
-    text: "Does your website have dedicated service pages for each offering?",
-    category: "website",
+    text: "Could you say in pounds what your marketing returned last year?",
+    category: "ai",
     options: [
       { label: "Yes", value: "yes", points: 10 },
-      { label: "Some", value: "some", points: 5 },
+      { label: "Roughly", value: "roughly", points: 6 },
       { label: "No", value: "no", points: 0 }
     ]
   },
   {
     id: 16,
-    text: "Is your contact information visible on every page?",
-    category: "website",
-    options: [
-      { label: "Yes", value: "yes", points: 10 },
-      { label: "Just on the contact page", value: "contact_only", points: 3 },
-      { label: "No", value: "no", points: 0 }
-    ]
-  },
-  {
-    id: 17,
-    text: "Do you have a blog or content section?",
-    category: "website",
-    options: [
-      { label: "Yes, updated regularly", value: "regular", points: 10 },
-      { label: "Yes, but rarely updated", value: "rarely", points: 4 },
-      { label: "No", value: "no", points: 0 }
-    ]
-  },
-
-  // Category 4: AI & Future-Readiness (5 questions)
-  {
-    id: 18,
-    text: "Are you using AI tools to help create content for your business?",
+    text: "Who looks after your marketing?",
     category: "ai",
     options: [
-      { label: "Yes, regularly", value: "regularly", points: 10 },
-      { label: "Experimenting", value: "experimenting", points: 5 },
-      { label: "No", value: "no", points: 0 }
-    ]
-  },
-  {
-    id: 19,
-    text: "Does your website have an AI chatbot or automated chat?",
-    category: "ai",
-    options: [
-      { label: "Yes", value: "yes", points: 10 },
-      { label: "Planning to", value: "planning", points: 3 },
-      { label: "No", value: "no", points: 0 }
-    ]
-  },
-  {
-    id: 20,
-    text: "Are AI search engines (like ChatGPT, Perplexity, Google AI) recommending your brand?",
-    category: "ai",
-    options: [
-      { label: "Yes", value: "yes", points: 10 },
-      { label: "Sometimes", value: "sometimes", points: 6 },
-      { label: "Not sure", value: "unsure", points: 2 },
-      { label: "No", value: "no", points: 0 }
-    ]
-  },
-  {
-    id: 21,
-    text: "Is your business information structured for AI assistants (like Siri, Alexa, Google Assistant)?",
-    category: "ai",
-    options: [
-      { label: "Yes", value: "yes", points: 10 },
-      { label: "Partially", value: "partial", points: 5 },
-      { label: "Not sure", value: "unsure", points: 2 },
-      { label: "No", value: "no", points: 0 }
-    ]
-  },
-  {
-    id: 22,
-    text: "Do you have FAQ content that could be picked up by AI search results?",
-    category: "ai",
-    options: [
-      { label: "Yes", value: "yes", points: 10 },
-      { label: "Some", value: "some", points: 5 },
-      { label: "No", value: "no", points: 0 }
+      { label: "A dedicated person or partner with a plan", value: "dedicated", points: 10 },
+      { label: "Me, when I have time", value: "me", points: 2 },
+      { label: "Nobody, really", value: "nobody", points: 0 }
     ]
   }
 ];

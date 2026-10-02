@@ -30,13 +30,13 @@ export default function ScoreSummary({ score }: ScoreSummaryProps) {
 
       <p className="text-gray-300 max-w-xl mx-auto">
         {score.level === 'high' && (
-          "Your business is leveraging many SEO best practices. Keep up the great work!"
+          "Buyers can find you and your site gives them reasons to get in touch. You're ahead of most."
         )}
         {score.level === 'medium' && (
-          "You've made progress, but there's room for improvement to boost your visibility."
+          "You're getting some enquiries from search, but buyers are still going elsewhere."
         )}
         {score.level === 'low' && (
-          "There are significant opportunities to improve your online presence and capture more leads."
+          "Most buyers who search for what you do won't find you yet. That's fixable."
         )}
       </p>
     </div>

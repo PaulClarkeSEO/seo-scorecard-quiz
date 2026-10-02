@@ -76,17 +76,15 @@ export default function ResultsPage() {
               {score.level === 'high' ? (
                 <div className="space-y-4">
                   <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
-                    <h3 className="font-semibold text-green-800 mb-2">Congratulations!</h3>
+                    <h3 className="font-semibold text-green-800 mb-2">You&apos;re ahead of most</h3>
                     <p className="text-green-700">
-                      Your business is leveraging many best practices in terms of Google My Business
-                      utilisation, local SEO, and website optimisation. Your efforts are likely
-                      translating into greater online visibility, more leads, and a strong competitive
-                      edge in your local market.
+                      Buyers can find you, your site gives them reasons to get in touch, and you can
+                      see where your work comes from. Most businesses your size can&apos;t say that.
                     </p>
                   </div>
                   <p className="text-gray-600">
-                    However, the digital landscape is always evolving. To maintain your lead and
-                    discover new growth opportunities, consider a strategy call with our specialists.
+                    Search is changing fast. Buyers now ask AI tools for supplier shortlists, and the
+                    businesses those tools recommend today will be hard to dislodge.
                   </p>
                 </div>
               ) : score.level === 'medium' ? (
@@ -94,13 +92,12 @@ export default function ResultsPage() {
                   <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-r-lg">
                     <h3 className="font-semibold text-yellow-800 mb-2">Room for Growth</h3>
                     <p className="text-yellow-700">
-                      You&apos;ve made progress with your online presence, but there&apos;s significant room
-                      for improvement. You&apos;re competing, but not yet dominating.
+                      You&apos;re getting some enquiries from search, but not as many as you could.
+                      Buyers who don&apos;t find you, or don&apos;t find what they need, shortlist someone else.
                     </p>
                   </div>
                   <p className="text-gray-600">
-                    With some focused effort on the areas highlighted above, you could see substantial
-                    improvements in your search visibility and lead generation.
+                    Start with your lowest category above. That&apos;s usually where the cheapest gains are.
                   </p>
                 </div>
               ) : (
@@ -108,14 +105,12 @@ export default function ResultsPage() {
                   <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg">
                     <h3 className="font-semibold text-red-800 mb-2">Time for Action</h3>
                     <p className="text-red-700">
-                      Your current score indicates that your business has significant untapped
-                      potential online. The good news? This means there are plenty of opportunities
-                      for quick wins.
+                      Right now, most buyers who search for what you do won&apos;t find you. That&apos;s
+                      fixable, and the first fixes are usually the cheapest.
                     </p>
                   </div>
                   <p className="text-gray-600">
-                    Right now, your competitors who have optimised their online presence are capturing
-                    leads that could be yours. But with the right strategy, you can turn this around.
+                    Every month your competitors hold those spots, they get harder to win back.
                   </p>
                 </div>
               )}

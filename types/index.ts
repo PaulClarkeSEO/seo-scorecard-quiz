@@ -13,6 +13,7 @@ export interface Question {
   id: number;
   text: string;
   category: Category;
+  categoryLabel?: string; // overrides the category chip, e.g. for the unscored qualifier
   options: QuestionOption[];
 }
 
